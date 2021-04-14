@@ -1,0 +1,47 @@
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+
+  importDerivedRoles:
+  - my_derived_roles
+
+  resource: leave_request
+  # comments
+  rules:
+  - actions: ["*"]
+    effect: EFFECT_ALLOW
+    roles:
+    - admin
+
+  - actions: ["create", "view", "submit"]
+    derivedRoles:
+    - employee_that_owns_the_record
+    effect: EFFECT_ALLOW
+
+  - actions: ["view"]
+    derivedRoles:
+    - direct_manager
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: request.resource.attr.status == "PENDING_APPROVAL"
+
+  - actions: ["approve"]
+    derivedRoles:
+    - direct_manager
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        all:
+          of:
+            - expr: request.resource.attr.status == "PENDING_APPROVAL"
+            - expr: request.resource.attr.owner != request.principal.id
+
+  - actions: ["view"]
+    derivedRoles:
+    - any_employee
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: request.resource.attr.status == "APPROVED"
