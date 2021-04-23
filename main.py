@@ -73,7 +73,7 @@ def questions(principal, action, resource):
     icon = None
     if cerbos.check(principal, action, resource):
         response = "_can_"
-        icon = emoji.emojize(":check_mark:")
+        icon = emoji.emojize(":thumbs_up:")
     else:
         response = "_cannot_"
         icon = emoji.emojize(":cross_mark:")
