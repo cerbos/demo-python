@@ -38,7 +38,7 @@ pedro = {
 }
 
 harrys_draft_holiday_request = {
-    "name": "leave_request",
+    "kind": "leave_request",
     "attr": {
         "department": "marketing",
         "geography": "GB",
@@ -50,7 +50,7 @@ harrys_draft_holiday_request = {
 }
 
 maggies_pending_holiday_request = {
-    "name": "leave_request",
+    "kind": "leave_request",
     "attr": {
         "department": "marketing",
         "geography": "GB",
