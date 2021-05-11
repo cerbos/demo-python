@@ -19,7 +19,7 @@ def check(principal, action, resource):
         request["principal"] = principal
         request["actions"] = [action]
         request["resource"] = {
-            "name": resource["name"],
+            "kind": resource["kind"],
             "instances": {resource_id: {"attr": resource["attr"]}},
         }
 
