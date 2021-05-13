@@ -100,6 +100,7 @@ print("\nHarry submits his holiday request\n")
 
 # Harry's pending holiday request:
 for principle, action in [
+    (harry, "view"),
     (harry, "approve"),
     (pedro, "view"),
     (amanda, "view"),
