@@ -1,34 +1,123 @@
-import uuid
-import requests as r
+# Copyright 2021 Zenauth Ltd.
+
+import dataclasses
+from dataclasses import dataclass
+from enum import Enum
+from typing import Any, AbstractSet, Mapping
+import requests
 import json
 
-BASE = "http://localhost:9998/api"
-CHECK = BASE + "/check"
+
+class Effect(str, Enum):
+    DENY = "EFFECT_DENY"
+    ALLOW = "EFFECT_ALLOW"
 
 
-def init(url):
-    BASE = url
+@dataclass
+class Principal:
+    id: str
+    roles: AbstractSet[str]
+    attr: Mapping[str, Any]
+    policy_version: str = "default"
 
-
-def check(principal, action, resource):
-    try:
-        resource_id = resource["attr"]["id"]
-
-        request = {}
-        request["requestId"] = str(uuid.uuid4())
-        request["principal"] = principal
-        request["actions"] = [action]
-        request["resource"] = {
-            "kind": resource["kind"],
-            "instances": {resource_id: {"attr": resource["attr"]}},
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "id": self.id,
+            "policyVersion": self.policy_version,
+            "roles": self.roles,
+            "attr": self.attr,
         }
 
-        response = r.post(CHECK, data=json.dumps(request))
-        j_response = json.loads(response.text)
 
-        return (
-            j_response["resourceInstances"][resource_id]["actions"][action]
-            == "EFFECT_ALLOW"
+@dataclass
+class ResourceInstance:
+    attr: Mapping[str, Any]
+
+
+@dataclass
+class ResourceSet:
+    kind: str
+    instances: Mapping[str, ResourceInstance]
+    policy_version: str = "default"
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "kind": self.kind,
+            "policyVersion": self.policy_version,
+            "instances": self.instances,
+        }
+
+
+@dataclass
+class CheckResourceSetRequest:
+    request_id: str
+    actions: AbstractSet[str]
+    principal: Principal
+    resource: ResourceSet
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "requestId": self.request_id,
+            "actions": self.actions,
+            "principal": self.principal.to_dict(),
+            "resource": self.resource.to_dict(),
+        }
+
+
+@dataclass
+class ResourceInstanceResult:
+    actions: Mapping[str, Effect]
+
+
+@dataclass
+class CheckResourceSetResponse:
+    request_id: str
+    resource_instances: Mapping[str, ResourceInstanceResult]
+
+    def is_allowed(self, resource_id: str, action: str) -> bool:
+        if resource_id in self.resource_instances:
+            res = self.resource_instances[resource_id]
+            if action in res["actions"]:
+                return res["actions"][action] == Effect.ALLOW
+
+        return False
+
+
+class CheckResourceSetRequestEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, CheckResourceSetRequest):
+            return obj.to_dict()
+
+        if dataclasses.is_dataclass(obj):
+            return dataclasses.asdict(obj)
+
+        return json.JSONEncoder.default(self, obj)
+
+
+class ClientException(Exception):
+    msg: str
+
+    def __init__(self, msg: str):
+        self.msg = msg
+
+
+class Client:
+    host: str
+
+    def __init__(self, host: str):
+        self.host = host
+
+    def check_resource_set(
+        self, request: CheckResourceSetRequest
+    ) -> CheckResourceSetResponse:
+        response = requests.post(
+            f"{self.host}/api/check",
+            data=json.dumps(request, cls=CheckResourceSetRequestEncoder),
         )
-    except Exception as e:
-        return None
+        if response.status_code != 200:
+            raise ClientException(f"Received status code {response.status_code}")
+
+        obj = response.json()
+        return CheckResourceSetResponse(
+            request_id=obj["requestId"], resource_instances=obj["resourceInstances"]
+        )
