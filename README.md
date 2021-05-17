@@ -1,6 +1,6 @@
 # Cerbos Python Demo
 
-Make sure your environment has the dependencies in `requirements.txt` installed before running.
+Make sure you have Python 3.9 and your environment has the dependencies in `requirements.txt` installed before running.
 
 Depending on your configuration, you may want to change `CERBOS_URL` in `main.py`.
 
