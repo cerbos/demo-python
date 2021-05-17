@@ -1,3 +1,9 @@
 conf.yaml
 venv/
 __pycache__
+.idea/cerbos-demo-python.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+cerbos-bin/logs/cerbos.log
+.idea/workspace.xml
