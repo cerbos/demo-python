@@ -7,7 +7,6 @@ resourcePolicy:
   - my_derived_roles
 
   resource: leave_request
-  # comments
   rules:
   - actions: ["*"]
     effect: EFFECT_ALLOW

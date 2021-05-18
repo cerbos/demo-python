@@ -6,7 +6,7 @@ import cerbos
 import emoji
 import uuid
 
-CERBOS_URL="http://localhost:9998"
+CERBOS_URL="http://localhost:3592"
 
 # Harry is an employee in the UK working in the marketing department's design team
 harry = cerbos.Principal(

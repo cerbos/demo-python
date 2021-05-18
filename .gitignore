@@ -7,3 +7,4 @@ __pycache__
 .idea/vcs.xml
 cerbos-bin/logs/cerbos.log
 .idea/workspace.xml
+.idea/
