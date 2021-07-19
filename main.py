@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # Copyright 2021 Zenauth Ltd.
+# SPDX-License-Identifier: Apache-2.0
 
 import copy
 import cerbos
@@ -129,6 +130,7 @@ if __name__ == "__main__":
         (amanda, "view"),
         (maggie, "approve"),
         (amanda, "approve"),
+        (harry, "submit"),
     ]:
         check(client, principal, action, harrys_draft_holiday_request)
 
