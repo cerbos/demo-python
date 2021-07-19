@@ -129,6 +129,7 @@ if __name__ == "__main__":
         (amanda, "view"),
         (maggie, "approve"),
         (amanda, "approve"),
+        (harry, "submit"),
     ]:
         check(client, principal, action, harrys_draft_holiday_request)
 
