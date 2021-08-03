@@ -6,10 +6,6 @@ Depending on your configuration, you may want to change `CERBOS_URL` in `main.py
 
 Policies to use with your Cerbos server are in the `cerbos-bin/policy` folder.
 
-* Login to the container registry  
-    ```sh
-    echo CERBOS_KEY | docker login pkg.cerbos.dev -u cerbos-ea --password-stdin
-    ```
 * Start the Cerbos server
     ```sh
     ./cerbos-bin/start.sh
