@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONTAINER_IMG=${CONTAINER_IMG:-"pkg.cerbos.dev/containers/cerbos"}
+CONTAINER_IMG=${CONTAINER_IMG:-"ghcr.io/cerbos/cerbos"}
 
 CONTAINER_TAG=${CONTAINER_TAG:-"0.4.0"}
 
