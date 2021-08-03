@@ -8,7 +8,7 @@ Policies to use with your Cerbos server are in the `cerbos-bin/policy` folder.
 
 * Login to the container registry  
     ```sh
-    echo YOUR_API_KEY | docker login pkg.cerbos.dev -u YOUR_USERNAME --password-stdin
+    echo CERBOS_KEY | docker login pkg.cerbos.dev -u cerbos-ea --password-stdin
     ```
 * Start the Cerbos server
     ```sh
