@@ -4,6 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONTAINER_IMG=${CONTAINER_IMG:-"pkg.cerbos.dev/containers/cerbos"}
+
 CONTAINER_TAG=${CONTAINER_TAG:-"0.4.0"}
 
 docker run -i -t -p 3592:3592 \
