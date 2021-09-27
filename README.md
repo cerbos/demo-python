@@ -28,5 +28,5 @@ Watch the demo with commentary:
   </a>
 
 ## Playground
-Launch the policy from this demo in our playground and play with it to see how Cerbos behaves.
+Launch the policy from this demo in our playground. Play with it to see how Cerbos behaves.
 <P><a href="https://play.cerbos.dev/p/UWG3inHjwrFhqkv60dec623G9PoYlgJf"><img src="https://github.com/cerbos/express-jwt-cerbos/blob/main/docs/launch.jpg"></a></p>
