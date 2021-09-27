@@ -26,3 +26,7 @@ Watch the demo with commentary:
     <p>Cerbos Python Demo (github) - Watch Video</p>
     <img style="max-width:300px;" src="https://cdn.loom.com/sessions/thumbnails/0425d8a075804d528185ad2ba30817b3-with-play.gif">
   </a>
+
+## Playground
+Launch the policy from this demo in our playground. Play with it to see how Cerbos behaves.
+<P><a href="https://play.cerbos.dev/p/UWG3inHjwrFhqkv60dec623G9PoYlgJf"><img src="https://github.com/cerbos/express-jwt-cerbos/blob/main/docs/launch.jpg"></a></p>
