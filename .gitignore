@@ -1,6 +1,13 @@
+.pyprojectx/
+__pypackages__/
+__pycache__/
+dist/
+
+*.pyc
+.pdm.toml
+
 conf.yaml
 venv/
-__pycache__
 .idea/cerbos-demo-python.iml
 .idea/misc.xml
 .idea/modules.xml
