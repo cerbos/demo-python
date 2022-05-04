@@ -1,0 +1,48 @@
+[project]
+name = "cerbos-demo"
+version = "0.1.0"
+description = "Demo of Cerbos integration in a Python project"
+authors = [
+    {name = "Cerbos Developers", email = "help@cerbos.dev"},
+]
+dependencies = [
+    "certifi==2020.12.5",
+    "chardet==4.0.0",
+    "emoji==1.2.0",
+    "idna==2.10",
+    "requests==2.25.1",
+    "urllib3==1.26.5",
+    "cerbos>=0.1.0",
+]
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+
+[tool.pdm]
+[[tool.pdm.source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[build-system]
+requires = ["pdm-pep517"]
+build-backend = "pdm.pep517.api"
+
+[tool.pyprojectx]
+pdm = "pdm==1.14.1"
+black = "black"
+isort = "isort"
+
+[tool.pyprojectx.aliases]
+install = "pdm install"
+run = "pdm run"
+outdated = "pdm update --outdated"
+isort = "isort main.py"
+black = "black main.py"
+format = "pw@isort && pw@black"
+demo = "pdm run python main.py"
+
+[tool.isort]
+profile = 'black'
+
+[tool.pyright]
+extraPaths = ["__pypackages__/3.10/lib/"]

@@ -1,25 +1,27 @@
-#! /usr/bin/env python
-# Copyright 2021 Zenauth Ltd.
+# Copyright 2021-2022 Zenauth Ltd.
 # SPDX-License-Identifier: Apache-2.0
 
-import copy
-import cerbos
-import emoji
-import uuid
+import dataclasses
+import os
 
-CERBOS_URL="http://localhost:3592"
+import emoji
+from cerbos.sdk.client import CerbosClient
+from cerbos.sdk.container import CerbosContainer
+from cerbos.sdk.model import *
+
+# Define the principals and resources we are going to use in the demo.
 
 # Harry is an employee in the UK working in the marketing department's design team
-harry = cerbos.Principal(
+harry = Principal(
     id="harry",
-    roles=["employee"],
+    roles={"employee"},
     attr={"department": "marketing", "geography": "GB", "team": "design"},
 )
 
 # Maggie is Harry's direct manager
-maggie = cerbos.Principal(
+maggie = Principal(
     id="maggie",
-    roles=["employee", "manager"],
+    roles={"employee", "manager"},
     attr={
         "department": "marketing",
         "geography": "GB",
@@ -29,9 +31,9 @@ maggie = cerbos.Principal(
 )
 
 # Amanda is Maggie's counterpart in the US
-amanda = cerbos.Principal(
+amanda = Principal(
     id="amanda",
-    roles=["employee", "manager"],
+    roles={"employee", "manager"},
     attr={
         "department": "marketing",
         "geography": "US",
@@ -41,14 +43,16 @@ amanda = cerbos.Principal(
 )
 
 # Pedro is an employee in a different team and geography
-pedro = cerbos.Principal(
+pedro = Principal(
     id="pedro",
-    roles=["employee"],
+    roles={"employee"},
     attr={"department": "shipping", "geography": "FR", "team": "Pod 1"},
 )
 
 # A leave request created by Harry that is still in DRAFT status
-harrys_draft_holiday_request = cerbos.ResourceInstance(
+harrys_draft_holiday_request = Resource(
+    id="XX125",
+    kind="leave_request",
     attr={
         "department": "marketing",
         "geography": "GB",
@@ -56,11 +60,13 @@ harrys_draft_holiday_request = cerbos.ResourceInstance(
         "owner": "harry",
         "status": "DRAFT",
         "team": "design",
-    }
+    },
 )
 
 # A leave request created by Maggie that is still in PENDING_APPROVAL status
-maggies_pending_holiday_request = cerbos.ResourceInstance(
+maggies_pending_holiday_request = Resource(
+    id="XX226",
+    kind="leave_request",
     attr={
         "department": "marketing",
         "geography": "GB",
@@ -68,44 +74,34 @@ maggies_pending_holiday_request = cerbos.ResourceInstance(
         "owner": "maggie",
         "status": "PENDING_APPROVAL",
         "team": "design",
-    }
+    },
 )
 
 # Harry's leave request that is now in PENDING_APPROVAL state
-harrys_pending_holiday_request = copy.deepcopy(harrys_draft_holiday_request)
+harrys_pending_holiday_request = Resource(
+    **dataclasses.asdict(harrys_draft_holiday_request)
+)
 harrys_pending_holiday_request.attr["status"] = "PENDING_APPROVAL"
 
 # Harry's leave request that is now in APPROVED state
-harrys_approved_holiday_request = copy.deepcopy(harrys_draft_holiday_request)
+harrys_approved_holiday_request = Resource(
+    **dataclasses.asdict(harrys_draft_holiday_request)
+)
 harrys_approved_holiday_request.attr["status"] = "APPROVED"
 
 
 # Check whether the principal is allowed to perform a specific action on the given resource
 def check(
-    client: cerbos.Client,
-    principal: cerbos.Principal,
+    client: CerbosClient,
+    principal: Principal,
     action: str,
-    resource: cerbos.ResourceInstance,
+    resource: Resource,
 ):
-    # Build the Cerbos request
-    request = cerbos.CheckResourceSetRequest(
-        request_id=str(uuid.uuid4()),
-        actions=[action],
-        principal=principal,
-        resource=cerbos.ResourceSet(
-            kind="leave_request", instances={resource.attr["id"]: resource}
-        ),
-    )
-
     try:
-        # Make a Cerbos request
-        response = client.check_resource_set(request)
-
         effect = "_cannot_"
         icon = emoji.emojize(":cross_mark:")
 
-        # Check whether the Cerbos response indicates that this action is allowed
-        if response.is_allowed(resource.attr["id"], action):
+        if client.is_allowed(action=action, principal=principal, resource=resource):
             effect = "_can_"
             icon = emoji.emojize(":thumbs_up:")
 
@@ -113,48 +109,57 @@ def check(
             f"{icon} {principal.id} {effect} {action} {resource.attr['owner']}'s "
             f"{resource.attr['status']} holiday request"
         )
-    except cerbos.ClientException as e:
-        print(f"Request failed: {e.msg}")
+    except Exception as e:
+        print(f"Request failed: {e}")
 
 
 if __name__ == "__main__":
-    # Initialise the Cerbos client
-    client = cerbos.Client(host=CERBOS_URL)
+    # Use the Cerbos TestContainer to start Cerbos automatically. This is for demonstration purposes only.
+    # In production scenarios Cerbos would be deployed as a separate service.
+    container = CerbosContainer()
+    policy_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policies")
+    container.with_volume_mapping(policy_dir, "/policies")
 
-    # Check access to Harry's draft holiday request
-    for principal, action in [
-        (harry, "create"),
-        (harry, "view"),
-        (pedro, "view"),
-        (maggie, "view"),
-        (amanda, "view"),
-        (maggie, "approve"),
-        (amanda, "approve"),
-        (harry, "submit"),
-    ]:
-        check(client, principal, action, harrys_draft_holiday_request)
+    with container:
+        container.wait_until_ready()
+        host = container.http_host()
 
-    # Check access to Harry's pending holiday request
-    print("\nHarry submits his holiday request\n")
+        # Create a Cerbos client
+        with CerbosClient(host) as client:
+            # Check access to Harry's draft holiday request
+            for principal, action in [
+                (harry, "create"),
+                (harry, "view"),
+                (pedro, "view"),
+                (maggie, "view"),
+                (amanda, "view"),
+                (maggie, "approve"),
+                (amanda, "approve"),
+                (harry, "submit"),
+            ]:
+                check(client, principal, action, harrys_draft_holiday_request)
 
-    for principal, action in [
-        (harry, "view"),
-        (harry, "approve"),
-        (pedro, "view"),
-        (amanda, "view"),
-        (maggie, "view"),
-        (amanda, "approve"),
-        (maggie, "approve"),
-    ]:
-        check(client, principal, action, harrys_pending_holiday_request)
+            # Check access to Harry's pending holiday request
+            print("\nHarry submits his holiday request\n")
 
-    # Check access to Harry's approved holiday request
-    print("\nMaggie approves Harry's holiday request\n")
+            for principal, action in [
+                (harry, "view"),
+                (harry, "approve"),
+                (pedro, "view"),
+                (amanda, "view"),
+                (maggie, "view"),
+                (amanda, "approve"),
+                (maggie, "approve"),
+            ]:
+                check(client, principal, action, harrys_pending_holiday_request)
 
-    for principal, action in [
-        (harry, "view"),
-        (pedro, "view"),
-        (amanda, "view"),
-        (maggie, "view"),
-    ]:
-        check(client, principal, action, harrys_approved_holiday_request)
+            # Check access to Harry's approved holiday request
+            print("\nMaggie approves Harry's holiday request\n")
+
+            for principal, action in [
+                (harry, "view"),
+                (pedro, "view"),
+                (amanda, "view"),
+                (maggie, "view"),
+            ]:
+                check(client, principal, action, harrys_approved_holiday_request)
