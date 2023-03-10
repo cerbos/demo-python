@@ -39,7 +39,9 @@ outdated = "pdm update --outdated"
 isort = "isort main.py"
 black = "black main.py"
 format = "pw@isort && pw@black"
-demo = "pdm run python main.py"
+demo = "pdm install; pdm run python main.py"
+graph = "pdm list --graph"
+help = "pdm -h"
 
 [tool.isort]
 profile = 'black'
