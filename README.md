@@ -6,14 +6,17 @@ It shows how Cerbos enforces access rules on a holiday request created by an emp
 
 ## Requirements
 - Minimum Python version supported by this demo is 3.10
-- Your Cerbos server is up and running (check how to run a [binary](https://docs.cerbos.dev/cerbos/latest/installation/binary.html), [container](https://docs.cerbos.dev/cerbos/latest/installation/container.html) or [Helm chart](https://docs.cerbos.dev/cerbos/latest/installation/helm.html))
 
 ⚠️ If you're completely new to Cerbos make sure to check the _[How it works](https://cerbos.dev/how-it-works)_ videos!  ⚠️
 
 
 ## Run the demo
 
-Make sure that the `console` / `terminal` tab you're using is positioned in the root of this `demo-python` repository.
+Clone this repository:
+  ```shell
+  git clone https://github.com/cerbos/demo-python.git 
+  cd demo-python
+  ```
 
 Run the following command to launch the demo:
 ```shell
