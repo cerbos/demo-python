@@ -1,7 +1,5 @@
 # Cerbos Python Demo
 
-<img src="https://github.com/cerbos/cerbos/blob/main/docs/supplemental-ui/logo.png?raw=true" alt="Cerbos" width="87" height="100"/>
-
 This project demonstrates how to work with [Cerbos](https://github.com/cerbos/cerbos) in Python projects.
 
 It shows how Cerbos enforces access rules on a holiday request created by an employee named Harry.
