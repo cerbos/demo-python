@@ -1,24 +1,24 @@
 # Cerbos Python Demo
 
-<img src="https://github.com/cerbos/cerbos/blob/main/docs/supplemental-ui/logo.png?raw=true" alt="Cerbos" width="87" height="100"/>
+This project demonstrates how to work with [Cerbos](https://github.com/cerbos/cerbos) in Python projects.
 
-This project `demo-python` will help you get familiar with using [Cerbos](https://github.com/cerbos/cerbos) in your Python applications.
-
-It's an app that follows access control regulation of a company employee `Harry` in process from submitting it, to getting his holiday request approved. Simply put, `demo-python` shows what are `Harry` and his work colleagues allowed to do with his `holiday request`.
+It shows how Cerbos enforces access rules on a holiday request created by an employee named Harry.
 
 ## Requirements
 - Minimum Python version supported by this demo is 3.10
-- Your Cerbos server is up and running (via either a [binary](https://docs.cerbos.dev/cerbos/latest/installation/binary.html), [container](https://docs.cerbos.dev/cerbos/latest/installation/container.html) or [helm](https://docs.cerbos.dev/cerbos/latest/installation/helm.html))
 
 ⚠️ If you're completely new to Cerbos make sure to check the _[How it works](https://cerbos.dev/how-it-works)_ videos!  ⚠️
 
 
 ## Run the demo
 
-Make sure that the `console` / `terminal` tab you're using is positioned in the root of this `demo-python` repository.
-You can do that by using the basic `cd` command which we will not be disecting now, but feel free to check how `cd` works in [Windows](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cd) and [Linux/Unix](https://www.javatpoint.com/linux-cd#:~:text=Linux%20cd%20command%20is%20used,commands%20in%20the%20Linux%20terminal) environments.
+Clone this repository:
+  ```shell
+  git clone https://github.com/cerbos/demo-python.git 
+  cd demo-python
+  ```
 
-Now that you're properly positioned, simply run the following command:
+Run the following command to launch the demo:
 ```shell
 ./pw demo
 ```
@@ -33,9 +33,9 @@ Amanda, who was previously disallowed from viewing or approving Harry’s leave 
 
 Do you understand why?
 
-Reach out to [Cerbos Slack Community]() where we'll gladly put it in simple terms. There you get to ask pretty much everything cerbos-related you might think of.
+Read more about Cerbos on our comprehensive [documentation](https://docs.cerbos.dev) or join the friendly [Cerbos Slack Community](https://join.slack.com/t/cerboscommunity/shared_invite/zt-1qlny60no-E8jLaLZSu08_ZhzORQOEOA) to ask questions.
 
-**P.S.** Feel free to get creative and edit [policies](policies) to test how even more complex use-cases would turn out.
+Feel free to get creative and edit [policies](policies) to test how even more complex use-cases would turn out.
 
 ## Demo Video
 Watch the demo with commentary:
