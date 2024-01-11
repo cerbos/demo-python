@@ -18,15 +18,16 @@ Clone this repository:
   cd demo-python
   ```
 
+If you are using Docker Desktop on a Mac, and have [not installed symlink during installation](https://docs.docker.com/desktop/mac/permission-requirements/#installing-symlinks) also run this:
+```shell
+sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
+```
+
 Run the following command to launch the demo:
 ```shell
 ./pw demo
 ```
 
-If you are using Docker Desktop on a Mac, and have [not installed symlink during installation](https://docs.docker.com/desktop/mac/permission-requirements/#installing-symlinks) also run this:
-```shell
-sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
-```
 That's all!
 
 The demo script (`main.py`) starts a new Cerbos container with the policies from the `policies` directory and sends requests for a set of different principals and resources to demonstrate how policy evaluation works.
