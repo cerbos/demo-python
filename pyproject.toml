@@ -28,7 +28,7 @@ requires = ["pdm-pep517"]
 build-backend = "pdm.pep517.api"
 
 [tool.pyprojectx]
-pdm = "pdm==2.4.8"
+pdm = "pdm"
 black = "black"
 isort = "isort"
 
