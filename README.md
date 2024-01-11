@@ -18,7 +18,7 @@ Clone this repository:
   cd demo-python
   ```
 
-If you are using Docker Desktop on a Mac, and have [not installed symlink during installation](https://docs.docker.com/desktop/mac/permission-requirements/#installing-symlinks) also run this:
+ ⚠️ If you are using Docker Desktop on a Mac, and have [not installed symlinks during installation](https://docs.docker.com/desktop/mac/permission-requirements/#installing-symlinks) also run this:
 ```shell
 sudo ln -s "$HOME/.docker/run/docker.sock" /var/run/docker.sock
 ```
