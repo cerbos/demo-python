@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform"]
 lock_version = "4.4.1"
-content_hash = "sha256:dd853d58a9ab7607c57cf0a3119bf6c8fd0b3546c311381a5b13b9ac08c07058"
+content_hash = "sha256:98ba492e56370ce9665d6793a932a2cf8cf78f3ebfbf20c5801f67855aece495"
 
 [[package]]
 name = "anyio"
@@ -23,45 +23,48 @@ files = [
 
 [[package]]
 name = "cerbos"
-version = "0.10.1"
+version = "0.10.5"
 requires_python = ">=3.8"
 summary = "SDK for working with Cerbos: an open core, language-agnostic, scalable authorization solution"
 dependencies = [
     "anyio>=3.6.1",
     "dataclasses-json>=0.5.7",
+    "googleapis-common-protos>=1.62.0",
     "grpcio-tools>=1.54.2",
     "httpx[http2]>=0.22.0",
+    "protoc-gen-openapiv2>=0.0.1",
     "requests-toolbelt>=0.9.1",
     "tenacity>=8.1.0",
     "types-protobuf>=4.24.0.1",
 ]
 files = [
-    {file = "cerbos-0.10.1-py3-none-any.whl", hash = "sha256:371c8c5c7e6353ac286720a0139a246dbe761cef2b084b06b0e7d6a25a479b54"},
-    {file = "cerbos-0.10.1.tar.gz", hash = "sha256:f92b256dbecb72d26b19960f39737fd15e339fbe82fb0c77c3d311f4165d12b6"},
+    {file = "cerbos-0.10.5-py3-none-any.whl", hash = "sha256:c831a3265a89e4fac5fcf170540297c090504f6f1b5b7aee848efaa637df8da3"},
+    {file = "cerbos-0.10.5.tar.gz", hash = "sha256:4e763514f27d4b9ad16b570a10ce29c4b475a984aacdc54c4a627c9c94d7e442"},
 ]
 
 [[package]]
 name = "cerbos"
-version = "0.10.1"
+version = "0.10.5"
 extras = ["testcontainers"]
 requires_python = ">=3.8"
 summary = "SDK for working with Cerbos: an open core, language-agnostic, scalable authorization solution"
 dependencies = [
-    "cerbos==0.10.1",
+    "cerbos==0.10.5",
     "testcontainers>=3.5.3",
 ]
 files = [
-    {file = "cerbos-0.10.1-py3-none-any.whl", hash = "sha256:371c8c5c7e6353ac286720a0139a246dbe761cef2b084b06b0e7d6a25a479b54"},
-    {file = "cerbos-0.10.1.tar.gz", hash = "sha256:f92b256dbecb72d26b19960f39737fd15e339fbe82fb0c77c3d311f4165d12b6"},
+    {file = "cerbos-0.10.5-py3-none-any.whl", hash = "sha256:c831a3265a89e4fac5fcf170540297c090504f6f1b5b7aee848efaa637df8da3"},
+    {file = "cerbos-0.10.5.tar.gz", hash = "sha256:4e763514f27d4b9ad16b570a10ce29c4b475a984aacdc54c4a627c9c94d7e442"},
 ]
 
 [[package]]
 name = "certifi"
-version = "2020.12.5"
+version = "2024.2.2"
+requires_python = ">=3.6"
 summary = "Python package for providing Mozilla's CA Bundle."
 files = [
-    {file = "certifi-2020.12.5-py2.py3-none-any.whl", hash = "sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830"},
-    {file = "certifi-2020.12.5.tar.gz", hash = "sha256:1a4995114262bffbc2413b159f2a1a480c969de6e6eb13ee966d470af86af59c"},
+    {file = "certifi-2024.2.2-py3-none-any.whl", hash = "sha256:dc383c07b76109f368f6106eee2b593b04a011ea4d55f652c6ca24a754d1cdd1"},
+    {file = "certifi-2024.2.2.tar.gz", hash = "sha256:0569859f95fc761b18b45ef421b1290a0f65f147e92a1e5eb3e635f9a5e4e66f"},
 ]
 
 [[package]]
@@ -133,6 +136,19 @@ summary = "Emoji for Python"
 files = [
     {file = "emoji-1.2.0-py3-none-any.whl", hash = "sha256:6b19b65da8d6f30551eead1705539cc0eadcd9e33a6ecbc421a29b87f96287eb"},
     {file = "emoji-1.2.0.tar.gz", hash = "sha256:496f432058567985838c13d67dde84ca081614a8286c0b9cdc7d63dfa89d51a3"},
+]
+
+[[package]]
+name = "googleapis-common-protos"
+version = "1.63.0"
+requires_python = ">=3.7"
+summary = "Common protobufs used in Google APIs"
+dependencies = [
+    "protobuf!=3.20.0,!=3.20.1,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5,<5.0.0.dev0,>=3.19.5",
+]
+files = [
+    {file = "googleapis-common-protos-1.63.0.tar.gz", hash = "sha256:17ad01b11d5f1d0171c06d3ba5c04c54474e883b66b949722b4938ee2694ef4e"},
+    {file = "googleapis_common_protos-1.63.0-py2.py3-none-any.whl", hash = "sha256:ae45f75702f7c08b541f750854a678bd8f534a1a6bace6afe975f1d0a82d6632"},
 ]
 
 [[package]]
@@ -374,6 +390,20 @@ files = [
     {file = "protobuf-4.25.2-cp37-abi3-manylinux2014_x86_64.whl", hash = "sha256:fc381d1dd0516343f1440019cedf08a7405f791cd49eef4ae1ea06520bc1c020"},
     {file = "protobuf-4.25.2-py3-none-any.whl", hash = "sha256:a8b7a98d4ce823303145bf3c1a8bdb0f2f4642a414b196f04ad9853ed0c8f830"},
     {file = "protobuf-4.25.2.tar.gz", hash = "sha256:fe599e175cb347efc8ee524bcd4b902d11f7262c0e569ececcb89995c15f0a5e"},
+]
+
+[[package]]
+name = "protoc-gen-openapiv2"
+version = "0.0.1"
+requires_python = ">=3.6"
+summary = "Provides the missing pieces for gRPC Gateway."
+dependencies = [
+    "googleapis-common-protos",
+    "protobuf>=4.21.0",
+]
+files = [
+    {file = "protoc-gen-openapiv2-0.0.1.tar.gz", hash = "sha256:6f79188d842c13177c9c0558845442c340b43011bf67dfef1dfc3bc067506409"},
+    {file = "protoc_gen_openapiv2-0.0.1-py3-none-any.whl", hash = "sha256:18090c8be3877c438e7da0f7eb7cace45a9a210306bca4707708dbad367857be"},
 ]
 
 [[package]]

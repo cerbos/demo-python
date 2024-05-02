@@ -6,7 +6,7 @@ authors = [
     {name = "Cerbos Developers", email = "help@cerbos.dev"},
 ]
 dependencies = [
-    "certifi==2020.12.5",
+    "certifi>=2024.2.2",
     "chardet==4.0.0",
     "emoji==1.2.0",
     "idna==2.10",
